@@ -29,7 +29,7 @@ app.post('/register', upload.single('myfile'), async (req, res) => {
             job, gender, myreligion, partnerreligion, aboutme, lookingfor, haskalaa
         } = req.body;
 
-        const image = req.file ? req.file.filename : null;
+        const photo = req.file ? req.file.filename : null;
 
         const newUser = new User({
             name,
@@ -50,7 +50,7 @@ app.post('/register', upload.single('myfile'), async (req, res) => {
             aboutme,
             lookingfor,
             haskalaa: Array.isArray(haskalaa) ? haskalaa : [haskalaa],
-            image,
+            photo,
             approved: false,
             status: 'pending',
             password: '',
