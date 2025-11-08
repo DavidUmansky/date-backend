@@ -12,9 +12,8 @@ const userSchema = new mongoose.Schema({
     school: String,
     city: String,
     hobbies: String,
-    image: {
+    photo: {
         type: String,
-        required: true
     },
     approved: Boolean,
     password: String,
