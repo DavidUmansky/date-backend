@@ -14,7 +14,7 @@ app.use(express.json());
 // Multer configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // folder where images will be stored
+    cb(null, 'tmp/'); // folder where images will be stored
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); // unique name
