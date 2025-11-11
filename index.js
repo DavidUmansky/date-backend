@@ -5,6 +5,7 @@ const path = require('path');
 const multer = require('multer');
 const User = require('./models/User');
 const app = express();
+const cloudinary = require('cloudinary').v2;
 
 // Middleware
 app.use(cors());
@@ -22,6 +23,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+cloudinary.config({
+  cloud_name: 'dhgouiiwi',
+  api_key: '951659787429666',
+  api_secret: 'UIy7yOUR8ZBJ8bVuIe4bPfnm5Ko'
+});
+
 app.post('/register', upload.single('myfile'), async (req, res) => {
     try {
         const {
@@ -29,9 +36,16 @@ app.post('/register', upload.single('myfile'), async (req, res) => {
             job, gender, myreligion, partnerreligion, aboutme, lookingfor, haskalaa
         } = req.body;
 
-        const photo = req.file ? req.file.filename : null;
+      let photo = null;
+      
+      if (req.file) {
+        const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'date-users'
+        });
+        photo = uploadResult.secure_url; // Save Cloudinary URL instead of local file
+      }
 
-        const newUser = new User({
+      const newUser = new User({
             name,
             lastn,
             phone,
